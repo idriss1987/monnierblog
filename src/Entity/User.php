@@ -8,6 +8,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
+
+
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
@@ -18,27 +21,89 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     private ?int $id = null;
 
+
+
+
+    #[Assert\NotBlank(
+        message: "L'email est obligatoire."
+        )]
+        #[Assert\Length(
+           
+            max: 180,
+            maxMessage: " L'email doit contenir au maximum {{ limit }} caractères." ,
+        )]
+        #[Assert\Email(
+            message: " Veuillez entrer un email valide .",
+        )]
     #[ORM\Column(length: 180, unique: true)]
     private ?string $email = null;
+
+    /**
+     * 
+     */
 
     #[ORM\Column]
     private array $roles = [];
 
+
+
+
+
     /**
      * @var string The hashed password
      */
+
+    #[Assert\NotBlank(
+        message: "Le mot de passe est obligatoire."
+        )]
+        #[Assert\Length(
+            min:8,
+            max: 255,
+            minMessage: " Le mot de passe doit contenir au minimum {{ limit }} caractères." ,
+            maxMessage: " Le mot de passe doit contenir au maximum {{ limit }} caractères." ,
+        )]
+    #[Assert\Regex(
+        pattern: '#^(?=.*[a-zà-ÿ])(?=.*[A-ZÀ-Ỳ])(?=.*[0-9])(?=.*[^a-zà-ÿA-ZÀ-Ỳ0-9]).{8,255}$#',
+        match:true,
+        message: "Votre mot de passe doit contenir au moins un chiffre, une lettre minuscule, une lettre majuscule et un caractère spécial"
+        )]
+        #[Assert\NotCompromisedPassword(
+            message:"Ce mot de passe est facilement piratable. Veuillez en choisir un autre."
+            )]
+
     #[ORM\Column]
     private ?string $password = null;
 
+
+    #[Assert\NotBlank(
+        message: "Le nom est obligatoire."
+        )]
+        #[Assert\Length(
+           
+            max: 255,
+            maxMessage: " Le nom doit contenir au maximum {{ limit }} caractères." ,
+        )]
     #[ORM\Column(length: 255)]
     private ?string $lastName = null;
-
+    
+    #[Assert\NotBlank(
+        message: "Le prénom est obligatoire."
+        )]
+        #[Assert\Length(
+           
+            max: 255,
+            maxMessage: " Le prénom doit contenir au maximum {{ limit }} caractères." ,
+        )]
     #[ORM\Column(length: 255)]
     private ?string $firstName = null;
+    
+
 
     #[ORM\Column(options: array('default' => false))]
     private ?bool $isVerified = null;
 
+
+    
     #[ORM\Column(length: 255, nullable: true)]
     private ?string $tokenForEmailVerification = null;
 

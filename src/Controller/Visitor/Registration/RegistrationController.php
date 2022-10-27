@@ -94,7 +94,7 @@ class RegistrationController extends AbstractController
         if ($user->isIsVerified() ) 
         {
             $this->addFlash("warning","votre compte a déja été verfié, veuillez vous connecter");
-            return $this->redirectToRoute("visitor.welcome.index");
+            return $this->redirectToRoute("visitor.authentication.login");
         }
 
         // Si le token récupéré depuis l'email est vide
@@ -131,6 +131,6 @@ class RegistrationController extends AbstractController
         $this->addFlash("success","Votre compte a été vérifié.Veuillez vous connecter!");
 
         // on redirige l 'utilisateur vers la page de connexion
-        return $this->redirectToRoute("visitor.welcome.index");
+        return $this->redirectToRoute("visitor.authentication.login");
     }
 }

@@ -1,0 +1,33 @@
+{% extends 'themes/base_visitor.html.twig' %}
+
+{% block title %}Réinitialisation du mot de passe{% endblock %}
+
+{% block main %}
+
+    {% for flash_error in app.flashes('reset_password_error') %}
+        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+    {% endfor %}
+
+    <h1 class="text-center my-3 display-5">Réinitialisation du mot de passe</h1>
+
+
+    <div class="container my-3">
+        <div class="row">
+            <div class="col-md-9 col-lg-7 mx-auto p-4 bg-white shadow">
+                {{ form_start(requestForm) }}
+                    <div class="mb-3">
+                        <small>
+                            Entrer votre adresse y email et nous vous y enverrons un lien pour la réinitialisation du mot de passe.
+                        </small>
+                    </div>
+                    <div class="mb-3">
+                        {{ form_widget(requestForm.email, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                    <div class="mb-3">
+                        <button class="btn btn-primary">Envoyer</button>
+                    </div>
+                {{ form_end(requestForm) }}
+            </div>
+        </div>
+    </div>
+{% endblock %}

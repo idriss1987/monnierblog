@@ -21,6 +21,10 @@ security:
                 path: visitor.authentication.logout
                 # where to redirect after logout
                 target: visitor.authentication.login
+            user_checker: App\Security\UserChecker
+            remember_me:
+                secret:   '%kernel.secret%' # required
+                lifetime: 604800 # 1 week in seconds
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall
