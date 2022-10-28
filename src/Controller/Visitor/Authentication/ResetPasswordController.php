@@ -42,7 +42,8 @@ class ResetPasswordController extends AbstractController
         $form = $this->createForm(ResetPasswordRequestFormType::class);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
+        if ($form->isSubmitted() && $form->isValid()) 
+        {
             return $this->processSendingPasswordResetEmail(
                 $form->get('email')->getData(),
                 $mailer,
@@ -58,7 +59,7 @@ class ResetPasswordController extends AbstractController
     /**
      * Confirmation page after a user has requested a password reset.
      */
-    #[Route('/check-email', name: 'app_check_email')]
+    #[Route('/check-email', name: 'visitor.authentication.forgot_password.check_email')]
     public function checkEmail(): Response
     {
         // Generate a fake token if the user does not exist or someone hit this page directly.
@@ -67,7 +68,7 @@ class ResetPasswordController extends AbstractController
             $resetToken = $this->resetPasswordHelper->generateFakeResetToken();
         }
 
-        return $this->render('reset_password/check_email.html.twig', [
+        return $this->render('pages/visitor/authentication/reset_password/check_email.html.twig', [
             'resetToken' => $resetToken,
         ]);
     }
@@ -75,7 +76,7 @@ class ResetPasswordController extends AbstractController
     /**
      * Validates and process the reset URL that the user clicked in their email.
      */
-    #[Route('/reset/{token}', name: 'app_reset_password')]
+    #[Route('/reset/{token}', name: 'visitor.authentication.forgot_password.reset')]
     public function reset(Request $request, UserPasswordHasherInterface $passwordHasher, TranslatorInterface $translator, string $token = null): Response
     {
         if ($token) {
@@ -83,12 +84,12 @@ class ResetPasswordController extends AbstractController
             // loaded in a browser and potentially leaking the token to 3rd party JavaScript.
             $this->storeTokenInSession($token);
 
-            return $this->redirectToRoute('app_reset_password');
+            return $this->redirectToRoute('visitor.authentication.forgot_password.reset');
         }
 
         $token = $this->getTokenFromSession();
         if (null === $token) {
-            throw $this->createNotFoundException('No reset password token found in the URL or in the session.');
+            throw $this->createNotFoundException("Le jeton de sécurité de la réinitialisation du mot de passe n'a pas été trouvé.");
         }
 
         try {
@@ -100,7 +101,7 @@ class ResetPasswordController extends AbstractController
                 $translator->trans($e->getReason(), [], 'ResetPasswordBundle')
             ));
 
-            return $this->redirectToRoute('app_forgot_password_request');
+            return $this->redirectToRoute('visitor.authentication.forgot_password.request');
         }
 
         // The token is valid; allow the user to change their password.
@@ -126,7 +127,7 @@ class ResetPasswordController extends AbstractController
             return $this->redirectToRoute('visitor.authentication.login');
         }
 
-        return $this->render('reset_password/reset.html.twig', [
+        return $this->render('pages/visitor/authentication/reset_password/reset.html.twig', [
             'resetForm' => $form->createView(),
         ]);
     }
@@ -139,7 +140,7 @@ class ResetPasswordController extends AbstractController
 
         // Do not reveal whether a user account was found or not.
         if (!$user) {
-            return $this->redirectToRoute('app_check_email');
+            return $this->redirectToRoute('visitor.authentication.forgot_password.check_email');
         }
 
         try {
@@ -155,14 +156,14 @@ class ResetPasswordController extends AbstractController
             //     $translator->trans($e->getReason(), [], 'ResetPasswordBundle')
             // ));
 
-            return $this->redirectToRoute('app_check_email');
+            return $this->redirectToRoute('visitor.authentication.forgot_password.check_email');
         }
 
         $email = (new TemplatedEmail())
             ->from(new Address('pascal-monnier@gmail.com', 'Pascal Monnier'))
             ->to($user->getEmail())
-            ->subject('Your password reset request')
-            ->htmlTemplate('reset_password/email.html.twig')
+            ->subject('Votre demande de réinitialisation du mot de passe sur le blog de Pascal Monnier')
+            ->htmlTemplate('email/reset_password.html.twig')
             ->context([
                 'resetToken' => $resetToken,
             ])
@@ -173,6 +174,6 @@ class ResetPasswordController extends AbstractController
         // Store the token object in session for retrieval in check-email route.
         $this->setTokenObjectInSession($resetToken);
 
-        return $this->redirectToRoute('app_check_email');
+        return $this->redirectToRoute('visitor.authentication.forgot_password.check_email');
     }
 }
