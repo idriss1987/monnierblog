@@ -1,0 +1,12 @@
+{% extends "themes/base_back.html.twig" %}
+
+{% block main %}
+    <div class="row" style="height:100%;">
+        <div class="col-md-2 bg-dark text-center">
+            {% include "layouts/sidebar/sidebar_admin.html.twig" %}
+        </div>
+        <div class="col-md-10">
+            {% block adminMain %}{% endblock %}
+        </div>
+    </div>
+{% endblock %}

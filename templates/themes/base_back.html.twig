@@ -16,7 +16,7 @@
         {# Fin   : Minimum de responsive design à mettre en place #}
 
         {# Début : Affichage du titre de la page dans l'onglet #}
-        <title>Le blog de Pascal Monnier - {% block title %}{% endblock %}</title>
+        <title>Le blog de Pascal Monnier - Espace admin - {% block title %}{% endblock %}</title>
         {# Fin   : Affichage du titre de la page dans l'onglet #}
 
         {# Début : Chargement de la favicon #}
@@ -29,19 +29,17 @@
         <meta name="theme-color" content="#ffffff">
         {# Fin   : Chargement de la favicon #}
 
-        {# debut mise en place du chargement des balises meta importantes au SEO #}
-        <meta name="robots" content="index, allow , all"/>
-        <meta name="description" content="{% block description %} {% endblock %}"/>
-        <meta name="keywords" content="dwwm, pascal monnier, symfony, PHP"/>
-        {# fin mise en place du chargement des balises meta importantes au SEO #}
-
+        {# Début : Chargement des balises meta importantes au SEO #}
+        <meta name="robots"      content="noindex" />
+        <meta name="description" content="{% block description %}{% endblock %}" />
+        {# Fin   : Chargement des balises meta importantes au SEO #}
 
         {# Début : Chargement de la font family : poppins #}
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
         {# Fin   : Chargement de la font family : poppins #}
-        
+
         {# Début : Chargement du css avec webpackencore #}
         {% block webpack_stylesheets %}
             {{ encore_entry_link_tags('app') }}
@@ -54,26 +52,22 @@
         {% endblock %}
         {# Fin   : Chargement du js avec webpackencore #}
 
-       
-
     </head>
+    <body class="bg-light">
+        
 
-    <body class = "bg-light">
-    {#  barre de navigation #}
-       {% include "layouts/nav/nav_visitor.html.twig"%}
-       {# fin barre de navigation #}
+        {# Début : Chargement de la barre de navigation #}
+        {% include "layouts/nav/nav_admin.html.twig" %}
+        {# Fin   : Chargement de la barre de navigation #}
 
+        <div class="container-fluid">
+            {% block main %}{% endblock %}
+        </div>
 
-       {# debut : chargement du contenu specifique a chaque page #}
-       <main class="container-fluid">
-        {% block main %} {% endblock %}
-    </main>
-    {# fin : chargement du contenu specifique a chaque page #}
+        {# Début: Chargement du pieds de page #}
+        {% include "layouts/footer/foot_admin.html.twig" %}
+        {# Fin  : Chargement du pieds de page #}
 
-    {# Début: Chargement du pieds de page #}
-    {% include "layouts/footer/foot_visitor.html.twig" %}
-    {# Fin  : Chargement du pieds de page #}
-
-    
     </body>
+
 </html>
