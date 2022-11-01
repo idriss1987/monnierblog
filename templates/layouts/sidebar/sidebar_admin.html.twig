@@ -1,8 +1,20 @@
     <div class="list-group bg-dark">
-        <a href=" {{ path('admin.home.index')}}" class="text-white bg-dark list-group-item">Accueil</a>
-        <a href=" {{ path('admin.category.index')}}" class="text-white bg-dark list-group-item">Catégories</a>
-        <a href="#" class="text-white bg-dark list-group-item">Articles</a>
-        <a href="#" class="text-white bg-dark list-group-item">Tags</a>
-        <a href="#" class="text-white bg-dark list-group-item">Contacts</a>
-        <a href="#" class="text-white bg-dark list-group-item">Utilisateurs</a>
+        <a href=" {{ path('admin.home.index')}}" class="text-white bg-dark list-group-item">Accueil 
+              <div><i class="align-middle" data-feather="home"></i></div>
+            </a>
+        <a href=" {{ path('admin.category.index')}}" class="text-white bg-dark list-group-item">Catégories
+            <div><i class="align-middle" data-feather="check-square"></i></div>
+        </a>
+        <a href="{{ path('admin.post.index')}}" class="text-white bg-dark list-group-item">Articles
+            <div><i class="align-middle" data-feather="feather"></i></div>
+        </a>
+        <a href="#" class="text-white bg-dark list-group-item">Tags
+            <div><i class="align-middle" data-feather="tag"></i></div>
+        </a>
+        <a href="#" class="text-white bg-dark list-group-item">Contacts
+            <div><i class="align-middle" data-feather="edit"></i></div>
+        </a>
+        <a href="#" class="text-white bg-dark list-group-item">Utilisateurs
+            <div><i class="align-middle" data-feather="users"></i></div>
+        </a>
     </div>

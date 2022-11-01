@@ -1,0 +1,47 @@
+{% extends "themes/base_admin.html.twig" %}
+
+{% block title %} Listes des articles{% endblock %}
+
+{% block description %}Listes des articles{% endblock %}
+
+{% block main %}
+    <h1 class="text-center my-3 display-5">Liste des articles</h1>
+
+    <div class="d-flex justify-content-end align-items-center my-3" >
+        <a href="{{ path('admin.post.create')}}" class="btn btn-primary" > Ajouter un nouvelle article</a>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover table-bordered tabled-striped text-center">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Image</th>
+                    <th>Titre</th>
+                    <th>Catégorie</th>
+                    <th>Publié ?</th>
+                    <th>Contenu</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for post in posts %}
+                    <tr>
+                        <td>{{ post.id }}</td>
+                        <td><img src="{{ vich_uploader_asset(post,'imageFile') | imagine_filter('admin_post_image_thumbnail')}}" alt="{{ post.title }}" /></td>
+                        <td>{{ post.title }}</td>
+                        <td>{{ post.category.name }}</td>
+                        <td>{{ post.isPublished }}</td>
+                        <td>
+                            <a href="" class="btn btn-sm btn-info">Lire</a>
+                        </td>
+                        <td>
+                            <a href="" class="btn btn-sm btn-secondary">Modifier</a>
+                            <a href="" class="btn btn-sm btn-danger">Supprimer</a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+{% endblock %}

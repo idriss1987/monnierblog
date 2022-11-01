@@ -43,4 +43,37 @@ class CategoryController extends AbstractController
 
         return $this->renderForm('pages/admin/category/create.html.twig',compact('form'));
     }
+
+    #[Route('/admin/category/edit/{id<\d+>}', name: 'admin.category.edit')]
+        public function edit(Category $category, Request $request , CategoryRepository $categoryRepository)
+        {
+            $form=$this->createForm(CategoryFormType::class, $category);
+
+            $form->handleRequest($request);
+
+            if ($form->isSubmitted()&& $form->isValid()) 
+            {
+                $categoryRepository->save($category, true);
+                $this->addFlash('success',"cette catégorie a été modifiée avec succès!");
+                return $this->redirectToRoute('admin.category.index');
+            }
+
+            return $this->renderForm("pages/admin/category/edit.html.twig",compact('form'));
+        
+        }
+
+        #[Route('/admin/category/delete/{id<\d+>}', name: 'admin.category.delete')]
+        public function delete(Category $category, Request $request,  CategoryRepository $categoryRepository) : Response
+        {
+            if ( $this->isCsrfTokenValid("delete_category_".$category->getId(), $request->request->get('_csrf_token')) ) 
+            {
+                $categoryRepository->remove($category, true);
+                $this->addFlash("success", "Cette catégorie été supprimée!");
+            }
+            
+            return $this->redirectToRoute('admin.category.index');
+    
+        }
+    
+
 }

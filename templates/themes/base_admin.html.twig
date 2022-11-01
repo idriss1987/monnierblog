@@ -40,6 +40,16 @@
         <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
         {# Fin   : Chargement de la font family : poppins #}
 
+        {# debut chargement jquery #}
+        {% block jquery %}{% endblock %}
+        {# fin chargement jquery #}
+
+
+
+        {# debut chargement datables #}
+        {% block datatables %}{% endblock %}
+        {# fin chargement datatables  #}
+
         {# Début : Chargement du css avec webpackencore #}
         {% block webpack_stylesheets %}
             {{ encore_entry_link_tags('app') }}
@@ -52,6 +62,7 @@
         {% endblock %}
         {# Fin   : Chargement du js avec webpackencore #}
 
+        {# icons  #}
         <script src="https://unpkg.com/feather-icons"></script>
     </head>
     <body class="bg-light">
@@ -79,6 +90,7 @@
         {% include "layouts/footer/foot_admin.html.twig" %}
         {# Fin  : Chargement du pieds de page #}
 
+        {# icons #}
         <script>
             feather.replace()
         </script>
