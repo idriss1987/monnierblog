@@ -2,9 +2,10 @@
 
 namespace App\Repository;
 
+use App\Entity\Tag;
 use App\Entity\Post;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 
 /**
  * @extends ServiceEntityRepository<Post>
@@ -37,6 +38,43 @@ class PostRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    /**
+    * @return Post[] Returns an array of Post objects
+    */
+   public function filterPostsByCategory($category_id): array
+   {
+       return $this->createQueryBuilder('p')
+           ->innerJoin('p.category','c')
+           ->andWhere('p.isPublished = :val')
+           ->andWhere('p.category = :category_id')
+           ->setParameter('val', true)
+           ->setParameter('category_id', $category_id)
+           ->orderBy('p.id', 'DESC')
+        //    ->setMaxResults(10)
+           ->getQuery()
+           ->getResult()
+       ;
+   }
+
+
+    public function filterPostsByTag(Tag $tag): array
+    {
+        // $data =  new ArrayCollection();
+
+        return $this->createQueryBuilder('p')
+            ->join('p.tags', 't')
+            ->select('p')
+            ->join('p.tags', 'tmp')
+            ->where('tmp.id = :id')
+            ->addSelect('t')
+            ->andWhere('p.isPublished = :val')
+            ->setParameter('id', $tag->getId())
+            ->setParameter('val', true)
+            ->getQuery()
+            ->getResult()
+        ;
     }
 
 //    /**

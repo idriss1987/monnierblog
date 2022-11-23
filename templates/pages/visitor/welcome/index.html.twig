@@ -1,8 +1,49 @@
 {% extends "themes/base_visitor.html.twig" %}
 
-{% block title %} Accueil{% endblock %}
+{% block title %}Accueil{% endblock %}
+
+{% block header %}
+    <header class="welcome-index-intro-section d-flex justify-content-center align-items-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7 intro-section-text text-center">
+                    <h1 class="display-2">
+                        <span class="display-2--intro">Bienvenue sur le blog du Docteur Monnier</span>
+                        <span class="display-2--description">la médecine et la biologie sous un autre angle</span>
+                    </h1>
+                    <a href="{{ path('visitor.blog.index') }}" class="btn btn-lg btn-primary">Lire les articles</a>
+                </div>
+                <div class="col-md-5 intro-section-image">
+                    <div class="text-center">
+                        <img class="img-fluid" src="{{ asset('images/static/visitor/welcome/pascal_monnier.jpg') }}" alt="Photo de présentation de Pascal Monnier" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+{% endblock %}
 
 
 {% block main %}
-<h1 class="text-center my-3 display-5"> Bienvennue sur le blog de Pascal Monnier</h1>
+    <div class="container my-5 bg-light shadow p-5">
+        <p>
+            Ce blog est celui d’un médecin de formation, explorateur par vocation.
+            J’y traite de l’actualité en médecine et biologie avec un focus sur les cas cliniques récemment publiés les plus étranges, déroutants, hallucinants, exceptionnels, incroyables, inoubliables.
+            il a egalement pour vocation d’informer les passionnés qui veulent garder un esprit critique face à la désinformation dans le milieu de la médecine , et l'actualité dans le monde .
+            vous pourrez y laisser vos commentaires une fois inscrit ou me contacter si vous avez des questions. je suis egalement co-auteur des ouvrages ci dessous . 
+            Mon désir est de vous surprendre, toujours avec sérieux et bonne humeur.
+        </p>
+
+        <div class="row">
+            <div class="col-md-4 my-3 my-lg-0">
+                <img class="img-fluid" alt="" src="{{ asset('images/static/visitor/welcome/Guide-Therapeutique-en-Medecine-des-Ventouses.jpg') }}" />
+            </div>
+            <div  class="col-md-4 my-3 my-lg-0">
+                <img class="img-fluid" alt="" src="{{ asset('images/static/visitor/welcome/Biologie-moleculaire-de-la-cellule.jpg') }}" />
+            </div>
+            <div  class="col-md-4 my-3 my-lg-0">
+                <img class="img-fluid" alt="" src="{{ asset('images/static/visitor/welcome/L-Incroyable-histoire-de-la-medecine.jpg') }}" />            
+            </div>
+        </div>
+    </div>
 {% endblock %}

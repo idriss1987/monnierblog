@@ -1,8 +1,8 @@
 {% extends "themes/base_admin.html.twig" %}
 
-{% block title %}Nouvel article{% endblock %}
+{% block title %}Modifier cet article{% endblock %}
 
-{% block description %}Nouvel article{% endblock %}
+{% block description %}Modifier cet article{% endblock %}
 
 {% block jquery %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -30,7 +30,7 @@
 {% endblock %}
 
 {% block main %}
-    <h1 class="text-center my-3 display-5">Nouvel article</h1>
+    <h1 class="text-center my-3 display-5">Modifier cet article</h1>
 
     <div class="container mt-5">
         {{ form_start(form) }}
@@ -50,9 +50,20 @@
                 {{ form_widget(form.tags, {'attr': {'class': 'form-control'}}) }}
             </div>
             <div class="mb-3">
-                <div class="text-danger">{{ form_errors(form.imageFile) }}</div>
                 <label for="post_form_image">Image</label>
-                {{ form_widget(form.imageFile, {'attr': {'class': 'form-control'}}) }}
+                <div class="text-danger">{{ form_errors(form.imageFile) }}</div>
+                <div class="row text-center">
+                    <div class="col-md-6">
+                        {% if post.image %}
+                            <img src="{{ vich_uploader_asset(post, 'imageFile') | imagine_filter('admin_post_image_thumbnail') }}" alt="{{ post.title }}" />
+                        {% else %}
+                            <img src="{{ asset('images/static/post/default-post-image.jpg') }}" height="auto" width="100" alt="Image par défaut de l'article" />
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6">
+                        {{ form_widget(form.imageFile, {'attr': {'class': 'form-control'}}) }}
+                    </div>
+                </div>
             </div>
             <div class="mb-3">
                 <div class="text-danger">{{ form_errors(form.content) }}</div>
@@ -60,7 +71,7 @@
                 {{ form_widget(form.content, {'attr': {'class': 'form-control', 'rows': 10}}) }}
             </div>
             <div class="mb-3">
-                <input type="submit" class="btn btn-primary" value="Créer" formnovalidate/>
+                <input type="submit" class="btn btn-primary" value="Modifier et sauvegarder" formnovalidate/>
             </div>
         {{ form_end(form) }}
     </div>

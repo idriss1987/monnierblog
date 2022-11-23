@@ -1,0 +1,24 @@
+{% extends "themes/base_admin.html.twig" %}
+
+{% block title %}Modifier ce tag{% endblock %}
+
+{% block description %}Modifier ce tag{% endblock %}
+
+{% block main %}
+    <h1 class="text-center display-5 my-3">Modifier ce tag</h1>
+
+    <div class="container mt-5">
+        {{ form_start(form) }}
+            <div class="mb-3">
+                <div class="text-danger">{{ form_errors(form.name) }}</div>
+                <label for="tag_form_name">Nom</label>
+                {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="mb-3">
+                <input type="submit" class="btn btn-primary" value="Envoyer" formnovalidate />
+            </div>
+        {{ form_end(form) }}
+    </div>
+
+
+{% endblock %}

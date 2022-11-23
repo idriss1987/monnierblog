@@ -1,0 +1,33 @@
+{% extends "themes/base_visitor.html.twig" %}
+
+{% block title %}{{ post.title }}{% endblock %}
+
+{% block description %}{{ post.title }}{% endblock %}
+
+{% block main %}
+    <div class="container">
+
+        <div class="container my-4">
+            <nav aria-label="breadcrumb py-5">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="{{ path('visitor.blog.index') }}">Liste des articles</a></li>
+                  <li class="breadcrumb-item" aria-current="page">Article n°{{ post.id }}</li>
+                </ol>
+            </nav>
+        </div>
+
+        <div class="text-center my-3">
+            <img src="{{ vich_uploader_asset(post, 'imageFile') }}" alt="" class="img-fluid">
+        </div>
+
+        <div class="text-center">
+            <h1 class="my-3 display-5">{{ post.title }}</h1>
+            <small class="lead">Créé le {{ post.createdAt|date("m/d/Y") }} et modifié le {{ post.updatedAt|date("m/d/Y à H:i:s") }}</small>
+        </div>
+
+        <div>
+            {{ post.content|raw }}
+        </div>
+
+    </div>
+{% endblock %}

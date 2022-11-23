@@ -1,0 +1,21 @@
+{% extends "themes/base_admin.html.twig" %}
+
+{% block title %}Lire l'article numéro  {{ post.id}} {% endblock %}
+
+{% block main %}
+    <div class="container my-5">
+        <div class="text-center my-2">
+            {% if post.image %}
+            <img src="{{ vich_uploader_asset(post, 'imageFile')}}" class="img-fluid" alt="{{ post.title }}" />
+            {% endif %}
+        </div>
+        <div class="text-center">
+            <h1 class="display-5"> {{ post.title}}  </h1>
+            <small class="lead"> Crée le {{ post.createdAt|date("d/m/Y")}} et modifié le {{ post.updatedAt|date("d/m/Y")}}  </small>
+        </div>
+        <div class="">
+            {{post.content|raw }}
+        </div>
+    </div>
+
+{% endblock %}

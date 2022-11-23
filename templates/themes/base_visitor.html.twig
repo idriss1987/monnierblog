@@ -54,6 +54,13 @@
         {% endblock %}
         {# Fin   : Chargement du js avec webpackencore #}
 
+        {# Début : Mise en place du css spécifique à chaque page #}
+    {% block css %}{% endblock %}
+    {# Fin   : Mise en place du css spécifique à chaque page #}
+
+    {# Début : Mise en place du js spécifique à chaque page #}
+    {% block js %}{% endblock %}
+    {# Fin   : Mise en place du js spécifique à chaque page #}
        
 
     </head>
@@ -62,6 +69,10 @@
     {#  barre de navigation #}
        {% include "layouts/nav/nav_visitor.html.twig"%}
        {# fin barre de navigation #}
+
+        {# Début : Mise en place de la section d'introduction #}
+    {% block header %}{% endblock %}
+    {# Fin   : Mise en place de la section d'introduction #}
 
 
        {# debut : chargement du contenu specifique a chaque page #}
