@@ -44,10 +44,10 @@
             </li>
             {% else %}
             <li class="nav-item">
-                <a class="nav-link" href="{{ path('visitor.authentication.login') }}">Connexion</a>
+                <a class="nav-link {{ uri_url == path('visitor.authentication.login') ? 'active' : '' }}"  {{ uri_url == path('visitor.authentication.login') ? 'aria-current="page"' : '' }} href="{{ path('visitor.authentication.login') }}">Connexion</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="{{ path('visitor.registration.register') }}">Inscription</a>
+                <a class="nav-link {{ uri_url == path('visitor.registration.register') ? 'active' : '' }}"  {{ uri_url == path('visitor.registration.register') ? 'aria-current="page"' : '' }} href="{{ path('visitor.registration.register') }}">Inscription</a>
             </li>
             {% endif %}
         </ul>
