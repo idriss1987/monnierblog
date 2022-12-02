@@ -14,7 +14,6 @@ use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
          * @var MailerInterface
          */
         private MailerInterface $mailer;
-
         /**
          * A chaque fois que le service qui permet d'envoyer l'email est appelé,
          * il fait appel au mailerInterface
@@ -25,8 +24,6 @@ use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
         {
             $this->mailer = $mailer;
         }
-
-
         /**
          * Cette méthode permet d'activer l'envoi de l'email
          *
