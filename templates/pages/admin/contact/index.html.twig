@@ -4,6 +4,24 @@
 
 {% block description %}Liste des contacts{% endblock %}
 
+{% block jquery %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{% endblock %}
+
+{% block datatables %}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.12.1/datatables.min.css"/>
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.12.1/datatables.min.js"></script>
+<script>
+    $(document).ready(function() {
+    $('#table').DataTable( {
+        language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.12.1/i18n/fr-FR.json'
+        }
+    } );
+} );
+</script>
+{% endblock %}
+
 {% block main %}
     <h1 class="text-center display-5 my-3">Liste des contacts</h1>
 

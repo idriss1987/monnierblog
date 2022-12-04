@@ -5,6 +5,8 @@ namespace App\Entity;
 use App\Repository\CommentRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Gedmo\Mapping\Annotation as Gedmo;
 
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
 class Comment
@@ -25,12 +27,23 @@ class Comment
     #[ORM\Column (options:['default' => true])]
     private ?bool $isActivated = null;
 
+
+    #[Assert\NotBlank(
+        message: "Le commentaire est obligatoire."
+        )]
+        #[Assert\Length(
+           
+            max: 4000,
+            maxMessage: " Le commentaire doit contenir au maximum {{ limit }} caractères." ,
+        )]
     #[ORM\Column(type: Types::TEXT)]
     private ?string $content = null;
 
+    #[Gedmo\Timestampable(on: 'create')]
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $createdAt = null;
 
+    #[Gedmo\Timestampable(on: 'create')]
     #[ORM\Column(nullable: true)]
     private ?\DateTimeImmutable $activatedAt = null;
 

@@ -25,9 +25,49 @@
             <small class="lead">Créé le {{ post.createdAt|date("m/d/Y") }} et modifié le {{ post.updatedAt|date("m/d/Y à H:i:s") }}</small>
         </div>
 
-        <div>
+        <div class="container">
             {{ post.content|raw }}
         </div>
 
+        <hr class="my-5">
+
+        <div class="container my-4">
+            <h2>Nouveau commentaire</h2>
+            {% if app.user %}
+                {{ form_start(form) }}
+                    <div class="mb-3">
+                        <div class="text-danger">{{ form_errors(form.content) }}</div>
+                        {{ form_widget(form.content, {'attr' : {'class' : "form-control"}}) }}
+                    </div>
+                    <div class="mb-3">
+                        <input type="submit" class="btn btn-primary" value="Envoyer" formnovalidate />
+                    </div>
+                {{ form_end(form) }}
+            {% else %}
+                <p>Veuillez vous <a href="{{ path('visitor.registration.register') }}">inscrire</a> ou vous <a href="{{path('visitor.authentication.login')  }}">connecter</a> pour laisser un commentaire.</p>
+            {% endif %}
+        </div>
+
+
+        <div class="container">
+            {% if post.comments|length == 0 %}
+                <p>Aucun commentaire laissé. Soyez le premier! </p>
+            {% else %}
+                <hr class="my-5">
+                <h2>Les commentaires</h2>
+                {% for comment in post.comments %}
+                    <div class="container bg-white shadow p-3">
+                        {% if comment.getUser.email == "pascal-monnier@gmail.com" %}
+                            <h4 class="lead">{{ comment.getUser.getFirstName }} {{ comment.getUser.getLastName }} <span class="badge text-bg-primary">Auteur</span></h4>
+                            {% else %}
+                            <h4 class="lead">{{ comment.getUser.getFirstName }} {{ comment.getUser.getLastName }}</h4>    
+                        {% endif %}
+                    
+                        <p>{{ comment.content }}</p>
+                    </div>
+                    <hr class="my-2">
+                {% endfor %}
+            {% endif %}
+        </div>
     </div>
 {% endblock %}
