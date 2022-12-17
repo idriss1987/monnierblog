@@ -9,8 +9,9 @@ use App\Entity\Category;
 use App\Form\CommentFormType;
 use App\Repository\TagRepository;
 use App\Repository\PostRepository;
-use App\Repository\CategoryRepository;
 use App\Repository\CommentRepository;
+use App\Repository\CategoryRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -19,12 +20,19 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class BlogController extends AbstractController
 {
     #[Route('/blog/all-posts', name: 'visitor.blog.index')]
-    public function index(CategoryRepository $categoryRepository ,PostRepository $postRepository , TagRepository $tagRepository): Response
+    public function index(CategoryRepository $categoryRepository ,PostRepository $postRepository , TagRepository $tagRepository , PaginatorInterface $paginator , Request $request): Response
     {
         $categories = $categoryRepository->findAll();
         $tags = $tagRepository->findAll();
-        $posts = $postRepository->findBy(['isPublished'=>true]);
-        return $this->render('pages/visitor/blog/index.html.twig' , compact('categories','tags','posts'));
+         $posts = $postRepository->findBy(['isPublished'=>true]);
+
+        $pagination = $paginator->paginate(
+            $posts, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            2 /*limit per page*/
+        );
+    
+        return $this->render('pages/visitor/blog/index.html.twig' , compact('categories','tags','pagination'));
 
     }
 

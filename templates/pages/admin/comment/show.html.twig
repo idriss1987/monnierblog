@@ -1,0 +1,15 @@
+{% extends "themes/base_admin.html.twig" %}
+
+{% block title %}Lire commentaire numéro {{ comment.id }} {% endblock %}
+
+{% block description %} Lire commentaire numéro {{ comment.id }} {% endblock %}
+
+{% block main %}
+    <h1 class="text-center my-3 display-5"> Lire commentaire numéro {{ comment.id }}</h1>
+    <div class="container mt-5">
+        <p>
+            {{ comment.content }}
+        </p>
+
+    </div>
+{% endblock %}

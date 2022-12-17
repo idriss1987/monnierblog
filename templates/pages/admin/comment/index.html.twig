@@ -1,0 +1,48 @@
+{% extends "themes/base_admin.html.twig" %}
+
+{% block title %}Liste des commentaires{% endblock %}
+
+{% block description %}Liste des commentaires{% endblock %}
+
+{% block main %}
+        <h1 class="text-center my-3 display-5"> Liste des commentaires </h1>
+
+        {% for message in app.flashes('success') %}
+        <div class="text-center alert alert-success alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+
+
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered text-center table-hover">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Auteur</th>
+                            <th>Email</th>
+                        <th>Options</th>    
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for comment in comments %}
+                        <tr>
+                            <td> {{comment.id}} </td>
+                            <td> {{comment.user.firstName}} {{comment.user.lastName}}</td>
+                            <td>{{comment.user.email}}</td>
+                            <td>
+                                <a href="{{ path('admin.comment.show',{'id': comment.id}) }}" class="btn btn-sm btn-info">Lire</a>
+                                <form class="d-inline" method="POST" action="{{ path('admin.comment.delete',{'id': comment.id}) }}">
+                                    <input type="hidden" name="_csrf_token" value="{{ csrf_token('comment_' ~ comment.id) }}" id="">
+                                    <input type="submit" value="Supprimer" class="btn btn-sm btn-danger" onclick="return confirm('Confirmer ?')">
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+
+        </div>
+{% endblock %}

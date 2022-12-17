@@ -47,3 +47,14 @@
 {
     color: $primary !important;
 }
+
+
+
+@media screen and (max-width: 600px) 
+{
+    .display-4
+    {
+        margin-bottom: 1rem;
+        margin-top: 4rem;
+    }
+}
