@@ -22,22 +22,17 @@
 </script>
 {% endblock %}
 
-
 {% block main %}
     <h1 class="text-center my-3 display-5">Liste des articles</h1>
-
     {% for message in app.flashes('success') %}
         <div class="text-center alert alert-success alert-dismissible fade show" role="alert">
             {{ message }}
             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         </div>
     {% endfor %}
-
-
     <div class="d-flex justify-content-end align-items-center my-3">
         <a href="{{ path('admin.post.create') }}" class="btn btn-primary">Nouvel article</a>
     </div>
-
     <div class="table-responsive">
         <table id="table" class="table table-hover table-bordered tabled-striped text-center">
             <thead>
@@ -61,7 +56,6 @@
                             {% else %}
                             <img src="{{ asset('images/static/post/default-post-image.jpg') }}" height="auto" width="100" alt="Image par defaut de l'article" />
                             {% endif %}
-                            
                         </td>
                         <td>{{ post.title }}</td>
                         <td>{{ post.category.name }}</td>

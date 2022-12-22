@@ -4,6 +4,25 @@
 
 {% block description %}Liste des commentaires{% endblock %}
 
+{% block jquery %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+{% endblock %}
+
+{% block datatables %}
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.12.1/datatables.min.css"/>
+<script type="text/javascript" src="https://cdn.datatables.net/v/bs5/jq-3.6.0/dt-1.12.1/datatables.min.js"></script>
+<script>
+    $(document).ready(function() {
+    $('#table').DataTable( {
+        language: {
+            url: 'https://cdn.datatables.net/plug-ins/1.12.1/i18n/fr-FR.json'
+        }
+    } );
+} );
+</script>
+{% endblock %}
+
+
 {% block main %}
         <h1 class="text-center my-3 display-5"> Liste des commentaires </h1>
 
@@ -16,10 +35,10 @@
 
 
         <div class="table-responsive">
-            <table class="table table-striped table-bordered text-center table-hover">
+            <table id="table" class="table table-striped table-bordered text-center table-hover">
                 <thead>
                     <tr>
-                        <th>Id</th>
+                        {# <th>Id</th> #}
                         <th>Auteur</th>
                             <th>Email</th>
                         <th>Options</th>    
@@ -28,7 +47,7 @@
                 <tbody>
                     {% for comment in comments %}
                         <tr>
-                            <td> {{comment.id}} </td>
+                            {# <td> {{comment.id}} </td> #}
                             <td> {{comment.user.firstName}} {{comment.user.lastName}}</td>
                             <td>{{comment.user.email}}</td>
                             <td>

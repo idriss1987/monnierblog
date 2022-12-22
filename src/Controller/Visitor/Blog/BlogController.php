@@ -24,7 +24,7 @@ class BlogController extends AbstractController
     {
         $categories = $categoryRepository->findAll();
         $tags = $tagRepository->findAll();
-         $posts = $postRepository->findBy(['isPublished'=>true]);
+        $posts = $postRepository->findBy(['isPublished'=>true]);
 
         $pagination = $paginator->paginate(
             $posts, /* query NOT result */
@@ -68,7 +68,9 @@ class BlogController extends AbstractController
         CategoryRepository $categoryRepository, 
         TagRepository $tagRepository,
         PostRepository $postRepository,
-        Category $category
+        Category $category,
+        PaginatorInterface $paginator,
+        Request $request
     ) : Response
     {
         
@@ -76,7 +78,13 @@ class BlogController extends AbstractController
         $tags       = $tagRepository->findAll();
         $posts      = $postRepository->filterPostsByCategory($category->getId());
 
-        return $this->render('pages/visitor/blog/index.html.twig', compact('categories', 'tags', 'posts'));
+        $pagination = $paginator->paginate(
+            $posts, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            2 /*limit per page*/
+        );
+
+        return $this->render('pages/visitor/blog/index.html.twig', compact('categories', 'tags', 'pagination'));
     }
 
     #[Route('/blog/{id<\d+>}/{slug}/filter-by-tag', name: 'visitor.blog.post.filter_by_tag')]
@@ -84,7 +92,9 @@ class BlogController extends AbstractController
         CategoryRepository $categoryRepository, 
         TagRepository $tagRepository,
         PostRepository $postRepository,
-        Tag $tag
+        Tag $tag,
+        PaginatorInterface $paginator,
+        Request $request
     ) : Response
     {
         
@@ -92,7 +102,13 @@ class BlogController extends AbstractController
         $tags       = $tagRepository->findAll();
         $posts      = $postRepository->filterPostsByTag($tag);
 
-        return $this->render('pages/visitor/blog/index.html.twig', compact('categories', 'tags', 'posts'));
+        $pagination = $paginator->paginate(
+            $posts, /* query NOT result */
+            $request->query->getInt('page', 1), /*page number*/
+            2 /*limit per page*/
+        );
+
+        return $this->render('pages/visitor/blog/index.html.twig', compact('categories', 'tags', 'pagination'));
     }
 
 

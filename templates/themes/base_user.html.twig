@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+
+        {# Début : Activation de l'encodage unicode des caractères #}
+        <meta charset="UTF-8">
+        {# Fin   : Activation de l'encodage unicode des caractères #}
+
+        {# Début : Activation de la compatibilté avec Internet Explorer #}
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        {# Fin   : Activation de la compatibilté avec Internet Explorer #}
+
+        {# Début : Minimum de responsive design à mettre en place #}
+            {# L'affichage en largeur du site doit s'adapter à la largeur de l'écran sur lequel il est affiché #}
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {# Fin   : Minimum de responsive design à mettre en place #}
+
+        {# Début : Affichage du titre de la page dans l'onglet #}
+        <title>Le blog de Pascal Monnier - Espace utilisateur - {% block title %}{% endblock %}</title>
+        {# Fin   : Affichage du titre de la page dans l'onglet #}
+
+        {# Début : Chargement de la favicon #}
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('favicon/apple-touch-icon.png') }}">
+        <link rel="icon" type="image/png" sizes="32x32" href="{{ asset('favicon/avicon-32x32.png') }}">
+        <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('favicon/favicon-16x16.png') }}">
+        <link rel="manifest" href="{{ asset('favicon/site.webmanifest') }}">
+        <link rel="mask-icon" href="{{ asset('favicon/safari-pinned-tab.svg') }}" color="#5bbad5">
+        <meta name="msapplication-TileColor" content="#da532c">
+        <meta name="theme-color" content="#ffffff">
+        {# Fin   : Chargement de la favicon #}
+
+        {# Début : Chargement des balises meta importantes au SEO #}
+        <meta name="robots"      content="noindex nofollow" />
+        <meta name="description" content="{% block description %}{% endblock %}" />
+        {# Fin   : Chargement des balises meta importantes au SEO #}
+
+        {# Début : Chargement de la font family : poppins #}
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
+        {# Fin   : Chargement de la font family : poppins #}
+
+
+
+
+        {# Début : Chargement du css avec webpackencore #}
+        {% block webpack_stylesheets %}
+            {{ encore_entry_link_tags('app') }}
+        {% endblock %}
+        {# Fin   : Chargement du css avec webpackencore #}
+
+        {# Début : Chargement du js avec webpackencore #}
+        {% block webpack_javascripts %}
+            {{ encore_entry_script_tags('app') }}
+        {% endblock %}
+        {# Fin   : Chargement du js avec webpackencore #}
+
+        {# icons  #}
+        <script src="https://unpkg.com/feather-icons"></script>
+    </head>
+    <body class="bg-light">
+
+        {# Début : Chargement de la barre de navigation #}
+        {% include "layouts/nav/nav_user.html.twig" %}
+        {# Fin   : Chargement de la barre de navigation #}
+
+
+
+{# debut charcgement du contenu spécifique a chaque page #}
+        <div class="container-fluid">
+                    {% block main %}{% endblock %}
+            </div>
+
+        </div>
+
+        {# Début: Chargement du pieds de page #}
+        {% include "layouts/footer/foot_user.html.twig" %}
+        {# Fin  : Chargement du pieds de page #}
+
+        {# icons #}
+        <script>
+            feather.replace()
+        </script>
+    </body>
+
+</html>

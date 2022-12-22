@@ -1,1 +1,21 @@
-page user
+{% extends "themes/base_user.html.twig" %}
+
+{% block title %}Accueil{% endblock %}
+
+{% block description %}Accueil{% endblock %}
+
+{% block main %}
+    <h1 class="text-center display-5 my-3">Bonjour {{ app.user.firstName}} ! </h1>
+
+    <div class=" container text-center mt-5">
+        <div class="row">
+            <div class="col-md-6 mx-auto shadow p-4 bg-white">
+                <p>Vous avez à ce jour rédigé {{ comments|length }} de commentaires. </p>
+            </div>
+
+        </div>
+        
+    </div>
+{% endblock %}
+
+
