@@ -6,4 +6,68 @@
 
 {% block main %}
     <h1 class="text-center my-3 display-5">Espace d'administration</h1>
+    <p class="text-center" > Bonjour {{app.user.firstName}}, vous avez : </p>
+    <div class="row g-3 my-2">
+        <div class="col-md-6 col-lg-4">
+            <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                <div>
+                    <h3 class="fs-2">{{ categories|length }}</h3>
+                    <p class="fs-5"> <a href="{{ path('admin.category.index')}}" class="text-dark ">Catégories</a></p>
+                </div>
+                <i class="align-middle" data-feather="check-square"></i>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+            <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                <div>
+                    <h3 class="fs-2">{{ posts|length }}</h3>
+                    <p class="fs-5"><a href="{{ path('admin.post.index')}}" class="text-dark ">Articles</a></p>
+                </div>
+                <i class="align-middle" data-feather="feather"></i>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+            <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                <div>
+                    <h3 class="fs-2">{{ tags|length }}</h3>
+                    <p class="fs-5"><a href="{{ path('admin.tag.index')}}" class="text-dark ">Tags</a></p>
+                </div>
+                <i class="align-middle" data-feather="tag"></i>
+            </div>
+        </div>
+    </div>
+
+    <div class="row g-3 my-2">
+        <div class="col-md-6 col-lg-4">
+            <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                <div>
+                    <h3 class="fs-2">{{ users|length }}</h3>
+                    <p class="fs-5"><a href="{{ path('admin.user.index')}}" class="text-dark ">Utilisateurs</a></p>
+                </div>
+                <i class="align-middle" data-feather="users"></i>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+            <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                <div>
+                    <h3 class="fs-2">{{ contacts|length }}</h3>
+                    <p class="fs-5"><a href="{{ path('admin.contact.index')}}" class="text-dark ">Contacts</a></p>
+                </div>
+                <i class="align-middle" data-feather="edit"></i>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+            <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
+                <div>
+                    <h3 class="fs-2">{{ comments|length }}</h3>
+                    <p class="fs-5"><a href="{{ path('admin.comment.index')}}" class="text-dark ">Commentaires</a></p>
+                </div>
+                <i class="align-middle" data-feather="message-square"></i>
+            </div>
+        </div>
+    </div>
 {% endblock %}

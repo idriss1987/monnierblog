@@ -100,11 +100,15 @@ class Post
     #[ORM\OneToMany(mappedBy: 'post', targetEntity: Comment::class, orphanRemoval: true)]
     private Collection $comments;
 
+    #[ORM\OneToMany(mappedBy: 'post', targetEntity: PostLike::class)]
+    private Collection $postLikes;
+
     public function __construct()
     {
         $this->isPublished = false;
         $this->tags = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->postLikes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -308,4 +312,48 @@ class Post
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, PostLike>
+     */
+    public function getPostLikes(): Collection
+    {
+        return $this->postLikes;
+    }
+
+    public function addPostLike(PostLike $postLike): self
+    {
+        if (!$this->postLikes->contains($postLike)) {
+            $this->postLikes->add($postLike);
+            $postLike->setPost($this);
+        }
+
+        return $this;
+    }
+
+    public function removePostLike(PostLike $postLike): self
+    {
+        if ($this->postLikes->removeElement($postLike)) {
+            // set the owning side to null (unless already changed)
+            if ($postLike->getPost() === $this) {
+                $postLike->setPost(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function isLikedByUser(User $user) : bool
+    {
+        foreach ($this->postLikes as $like) 
+        {
+            if ($like->getUser() === $user) 
+            {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
 }

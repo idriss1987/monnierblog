@@ -137,6 +137,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Comment::class, orphanRemoval: true)]
     private Collection $comments;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: PostLike::class)]
+    private Collection $postLikes;
+
 
     public function __construct()
     {
@@ -144,6 +147,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->roles[] = "ROLE_USER";
         $this->posts = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->postLikes = new ArrayCollection();
     }
 
 
@@ -367,6 +371,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($comment->getUser() === $this) {
                 $comment->setUser(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, PostLike>
+     */
+    public function getPostLikes(): Collection
+    {
+        return $this->postLikes;
+    }
+
+    public function addPostLike(PostLike $postLike): self
+    {
+        if (!$this->postLikes->contains($postLike)) {
+            $this->postLikes->add($postLike);
+            $postLike->setUser($this);
+        }
+
+        return $this;
+    }
+
+    public function removePostLike(PostLike $postLike): self
+    {
+        if ($this->postLikes->removeElement($postLike)) {
+            // set the owning side to null (unless already changed)
+            if ($postLike->getUser() === $this) {
+                $postLike->setUser(null);
             }
         }
 

@@ -29,6 +29,19 @@
             {{ post.content|raw }}
         </div>
 
+        <a class="js-like-link" href="{{ path('visitor.blog.post.like', {'id': post.id, 'slug': post.slug}) }}">
+            {% if app.user and post.isLikedByUser(app.user) %}
+                <i class="fa-solid fa-thumbs-up"></i> 
+            {% else %}
+                <i class="fa-regular fa-thumbs-up"></i>
+            {% endif %}
+            <span class="js-likes-length">{{ post.postLikes|length }}</span>
+            <span>J'aime</span>
+        </a>
+
+
+
+
         <hr class="my-5">
 
         <div class="container my-4">
@@ -70,4 +83,48 @@
             {% endif %}
         </div>
     </div>
+{% endblock %}
+
+{% block js %}
+    <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+    <script>
+
+        function onClickBtnLike(event)
+        {
+            event.preventDefault();
+
+            const url = this.href;
+            const spanLength = this.querySelector('span.js-likes-length');
+            const icone = this.querySelector('i');
+
+            axios.get(url)
+            .then(function(response) {
+                const postLikes = response.data.postLikes;
+                spanLength.textContent = postLikes;
+
+                if(icone.classList.contains('fa-regular'))
+                {
+                    icone.classList.replace('fa-regular', 'fa-solid');
+                }
+                else
+                {
+                    icone.classList.replace('fa-solid', 'fa-regular');
+                }
+            })
+            .catch(function(error) {
+                if(error.response.status === 403)
+                {
+                    alert('Vous ne pouvez pas aimé cet article  sans être connecté');
+                }
+                else
+                {
+                    alert("Une erreur s'est produite, veuillez reessayer plus tard");
+                }
+            })
+        }
+
+        const link = document.querySelector(".js-like-link");
+
+        link.addEventListener("click", onClickBtnLike);
+    </script>
 {% endblock %}

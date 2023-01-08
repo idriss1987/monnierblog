@@ -6,11 +6,13 @@ use App\Entity\Tag;
 use App\Entity\Post;
 use App\Entity\Comment;
 use App\Entity\Category;
+use App\Entity\PostLike;
 use App\Form\CommentFormType;
 use App\Repository\TagRepository;
 use App\Repository\PostRepository;
 use App\Repository\CommentRepository;
 use App\Repository\CategoryRepository;
+use App\Repository\PostLikeRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -111,8 +113,41 @@ class BlogController extends AbstractController
         return $this->render('pages/visitor/blog/index.html.twig', compact('categories', 'tags', 'pagination'));
     }
 
+    #[Route('/blog/post/{id<\d+>}/{slug}/like', name: 'visitor.blog.post.like')]
+    public function like(Post $post, PostLikeRepository $postLikeRepository) : Response
+    {
+        $user = $this->getUser();
 
-   
+        if (!$user) 
+        {
+            return $this->json(array('code' => 403, 'message' => 'Unautorized'), 403);
+        }
+
+        if ( $post->isLikedByUser($user) ) 
+        {
+            $post_liked = $postLikeRepository->findOneBy(array('post' => $post, 'user' => $user));
+
+            $postLikeRepository->remove($post_liked, true);
+            
+            return $this->json(array(
+                'code' => 200, 
+                'message' => 'Like bien supprimé',
+                'postLikes' => $postLikeRepository->count(array('post' => $post))
+            ), 200);
+        }
+
+        $postLike = new PostLike();
+        $postLike->setPost($post);
+        $postLike->setUser($user);
+
+        $postLikeRepository->save($postLike, true);
+
+        return $this->json(array(
+            'code' => 200, 
+            'message' => 'Like bien ajouté',
+            'postLikes' => $postLikeRepository->count(array('post' => $post))
+        ), 200);
+    }
 
 
 }

@@ -8,13 +8,22 @@
     <h1 class="text-center display-5 my-3">Bonjour {{ app.user.firstName}} ! </h1>
 
     <div class=" container text-center mt-5">
-        <div class="row">
+        <div class="row my-3">
             <div class="col-md-6 mx-auto shadow p-4 bg-white">
-                <p>Vous avez à ce jour rédigé {{ comments|length }} de commentaires. </p>
+                <p>Vous avez  rédigé  à ce jour, {{ app.user.comments|length }} de commentaires. </p>
             </div>
-
         </div>
-        
+        <div class="row my-3">
+            <div class="col-md-6 mx-auto shadow p-4 bg-white">
+                {% if  app.user.postLikes|length == 0 %}
+                    <p>Vous n'avez aimé aucun article pour l'instant.</p>
+                {% elseif  app.user.postLikes|length == 1 %}
+                    <p>Vous avez aimé {{ app.user.postLikes|length  }} article.</p>
+                {% else %}
+                    <p>Vous avez aimé {{ app.user.postLikes|length  }} articles.</p>
+                {% endif %}
+            </div>
+        </div>
     </div>
 {% endblock %}
 

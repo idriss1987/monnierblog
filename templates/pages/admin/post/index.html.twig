@@ -78,7 +78,7 @@
                             <a href="{{ path('admin.post.show',{'id': post.id})}}" class="btn btn-sm btn-info">Lire</a>
                         </td>
                         <td>
-                            <a href="{{ path('admin.post.edit',{'id': post.id})}}" class="btn btn-sm btn-secondary">Modifier</a>
+                            <a href="{{ path('admin.post.edit',{'id': post.id})}}" class="btn btn-sm btn-secondary mb-1">Modifier</a>
 
                             <form method="POST" action="{{ path('admin.post.delete', {'id': post.id}) }}" class="d-inline">
                                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('delete_post_' ~ post.id)}}"/>

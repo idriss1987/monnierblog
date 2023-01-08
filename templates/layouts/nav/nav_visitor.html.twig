@@ -30,8 +30,7 @@
                         <a class="nav-link" href="{{ path('admin.home.index') }}">Espace admin</a>
                     </li>
                 {% endif %}
-                {% if is_granted('ROLE_USER') and ('ROLE_ADMIN' in app.user.roles) %}
-                    {% else %}
+                {% if is_granted('ROLE_USER') %}
                     <li class="nav-item">
                         <a class="nav-link" href="{{ path('user.home.index') }}">Mon compte</a>
                     </li>

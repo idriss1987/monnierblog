@@ -43,6 +43,11 @@
                                     <h3>{{ post.title }}</h3>
                                     <p>Catégorie : {{ post.category.name }}</p>
                                     <p><small>Publié le {{ post.publishedAt|date('d-m-Y') }}</small></p>
+                                    {% if post.postLikes|length == 1 %}
+                                            <p class="my-2"><small>{{ post.postLikes|length }} personne a aimé cet article</small></p>
+                                        {% elseif post.postLikes|length > 1 %} 
+                                            <p class="my-2"><small>{{ post.postLikes|length }} personnes ont aimé cet article</small></p>
+                                        {% endif %}
                                     {# <p>{{ post.content|slice(0, 8)|striptags }}</p> #}
                                     <a href="{{ path('visitor.blog.post.show', {'id': post.id, 'slug': post.slug}) }}" class="btn btn-primary">Lire l'article</a>
                                 </div>
